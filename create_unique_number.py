@@ -7,21 +7,28 @@
 # ex) 123이 있을 경우 231은 skip
 # 각 결과의 범위는 0 ~ (10 ^ digit)
 def create_unique_number(digit):
-    max_num = pow(10, digit)
     result = []
-    for i in range(0, max_num):
+    start = 0
+    end = 0
+    # 시작 수 계산하여 시간 조금 줄이기
+    for i in range(digit):
+        start += pow(10, digit - 1 - i) * i
+    # 끝 수 계산하여 시간 조금 줄이기
+    for i in range(digit):
+        end += (pow(10, i) * (9 - i))
+    for i in range(start, end + 1):
         # 자릿수를 쪼개서 리스트로 만드는 함수
         # ex) 345 => [3, 4, 5]
         temp = [int(j) for j in str(i)]
-        # 현재 수의 자릿수가 제시된 자릿수보다 작으면 맨 앞에 0 삽입
-        # ex) 12 => 012
-        while len(temp) < digit:
-            temp.insert(0, 0)
         # set으로 전환한 리스트의 길이와 원래 리스트의 길이가 다르면 skip
         # 숫자에 중복이 있는지 체크
         # ex) 122 => skip
         if len(temp) != len(set(temp)):
             continue
+        # 현재 수의 자릿수가 제시된 자릿수보다 작으면 맨 앞에 0 삽입
+        # ex) 12 => 012
+        while len(temp) < digit:
+            temp.insert(0, 0)
         # 지금까지 나온 결과를 순회하여
         is_duplicated = False
         for j in result:
@@ -40,7 +47,11 @@ def create_unique_number(digit):
 # 다른 파일에서 import하여 실행했을 때에는 동작하지 않음.
 if __name__ == "__main__":
     # 자릿수로 지정
-    result = create_comb(3)
-    # 출력
-    for i in result:
-        print(i)
+    digit = int(input("자릿수(정수, n)를 입력하세요. (0 < n < 10) ==> "))
+    if digit > 0 and digit < 10:
+        result = create_unique_number(digit)
+        # 출력
+        for i in result:
+            print(i)
+    else:
+        print("올바르지 않은 입력입니다.")
