@@ -20,15 +20,15 @@ def create_unique_number(digit):
         # 자릿수를 쪼개서 리스트로 만드는 함수
         # ex) 345 => [3, 4, 5]
         temp = [int(j) for j in str(i)]
+        # 현재 수의 자릿수가 제시된 자릿수보다 작으면 맨 앞에 0 삽입
+        # ex) 12 => 012
+        while len(temp) < digit:
+            temp.insert(0, 0)
         # set으로 전환한 리스트의 길이와 원래 리스트의 길이가 다르면 skip
         # 숫자에 중복이 있는지 체크
         # ex) 122 => skip
         if len(temp) != len(set(temp)):
             continue
-        # 현재 수의 자릿수가 제시된 자릿수보다 작으면 맨 앞에 0 삽입
-        # ex) 12 => 012
-        while len(temp) < digit:
-            temp.insert(0, 0)
         # 지금까지 나온 결과를 순회하여
         is_duplicated = False
         for j in result:
